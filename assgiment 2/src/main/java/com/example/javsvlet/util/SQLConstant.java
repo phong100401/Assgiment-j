@@ -20,6 +20,8 @@ public class SQLConstant {
     public static final String SET = "SET";
     public static final String DELETE = "DELETE";
     public static final String COUNT = "COUNT";
+    public static final String ADD= "ADD";
+    public static final String ALTER_TABLE = "ALTER TABLE";
     public static final String AS = "AS";
     public static final String LIMIT = "LIMIT";
     public static final String OFFSET = "OFFSET";
