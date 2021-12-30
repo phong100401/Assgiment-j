@@ -4,6 +4,7 @@ import com.example.javsvlet.annotation.Column;
 import com.example.javsvlet.annotation.Entity;
 import com.example.javsvlet.annotation.ForeignKey;
 import com.example.javsvlet.annotation.Id;
+import com.example.javsvlet.entity.Category;
 import com.example.javsvlet.util.ConnectHelper;
 import com.example.javsvlet.util.SQLConstant;
 import org.reflections.Reflections;
@@ -25,6 +26,10 @@ public class MainApplication {
                 annotated) {
             // thực hiện migrate cho class đó.
             doMigrate(clazz);
+        }
+        //thực hiện add khóa ngoại
+        for (Class<?> clazz : annotated) {
+            addForeignKey(clazz);
         }
     }
 
@@ -79,30 +84,11 @@ public class MainApplication {
                 }
             }
 
-
             stringBuilder.append(SQLConstant.COMMA);
         }
         stringBuilder.append(SQLConstant.COMMA);
         stringBuilder.setLength(stringBuilder.length() - 1);
-        for (int i = 0; i < fields.length; i++){
-            String fieldName = fields[i].getName();
-            if (fields[i].isAnnotationPresent(ForeignKey.class)){
-                stringBuilder.append(SQLConstant.FOREIGN_KEY);
-                stringBuilder.append(SQLConstant.SPACE);
-                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
-                stringBuilder.append(fieldName);
-                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
-                stringBuilder.append(SQLConstant.SPACE);
-                stringBuilder.append(SQLConstant.REFERENCES);
-                stringBuilder.append(SQLConstant.SPACE);
-                ForeignKey foreignKey = fields[i].getAnnotation(ForeignKey.class);
-                stringBuilder.append(foreignKey.referenceTable());
-                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
-                stringBuilder.append(foreignKey.referenceColumn());
-                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
-                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
-            }
-        }
+
         stringBuilder.setLength(stringBuilder.length() - 1);
         stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
 
@@ -122,6 +108,52 @@ public class MainApplication {
             System.out.println("Create table success!");
         } catch (SQLException e) {
             System.err.println("Create table fails, error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    static void addForeignKey(Class clazz) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String tableName = clazz.getSimpleName();
+        Entity annotationTable = (Entity) clazz.getAnnotation(Entity.class);
+        String annotationTableName = annotationTable.tableName();
+        if (annotationTableName != null && annotationTableName.length() > 0) {
+            tableName = annotationTableName;
+        }
+        stringBuilder.append(SQLConstant.ALTER_TABLE);
+        stringBuilder.append(SQLConstant.SPACE);
+        stringBuilder.append(tableName);
+        stringBuilder.append(SQLConstant.SPACE);
+        stringBuilder.append(SQLConstant.ADD);
+        stringBuilder.append(SQLConstant.SPACE);
+        stringBuilder.append(SQLConstant.FOREIGN_KEY);
+        stringBuilder.append(SQLConstant.SPACE);
+        // trả về danh sách các thuộc tính.
+        Field[] fields = clazz.getDeclaredFields();
+        for (int i = 0; i < fields.length; i++){
+            String fieldName = fields[i].getName();
+            if (fields[i].isAnnotationPresent(ForeignKey.class)){
+                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
+                stringBuilder.append(fieldName);
+                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append(SQLConstant.REFERENCES);
+                stringBuilder.append(SQLConstant.SPACE);
+                ForeignKey foreignKey = fields[i].getAnnotation(ForeignKey.class);
+                stringBuilder.append(foreignKey.referenceTable());
+                stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
+                stringBuilder.append(foreignKey.referenceColumn());
+                stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
+            }
+        }
+        System.out.println(stringBuilder.toString());
+        Connection cnn = null;
+        try {
+            cnn = ConnectHelper.getConnection();
+            Statement stt = cnn.createStatement();
+            System.out.println("Try to execute statement: '" + stringBuilder.toString() + "'");
+            stt.execute(stringBuilder.toString());
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
