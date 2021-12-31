@@ -12,7 +12,7 @@
 <html>
 <header>
     <jsp:include page="/admin/include/header.jsp">
-        <jsp:param name="title" value="Creat New Food"/>
+        <jsp:param name="title" value="Creat New Phone"/>
         <jsp:param name="description" value="Admin area"/>
         <jsp:param name="keywords" value="admin, page, ..."/>
     </jsp:include>
@@ -36,7 +36,7 @@
         <h5><b><i class="fa fa-dashboard"></i> Creat</b></h5>
     </header>
     <form action="/admin/creat-phone" method="post" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
-        <h2 class="w3-center">Add New Food</h2>
+        <h2 class="w3-center">Add New Phone</h2>
 
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
