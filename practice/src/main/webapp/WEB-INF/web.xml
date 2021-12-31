@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--  khai báo như route   -->
+    <servlet>
+        <servlet-name>ListPhoneServlet</servlet-name>
+        <servlet-class>com.example.javsvlet.controller.ListPhone</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListPhoneServlet</servlet-name>
+        <url-pattern>/admin/list-phone</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreatPhoneServlet</servlet-name>
+        <servlet-class>com.example.javsvlet.controller.CreatePhone</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreatPhoneServlet</servlet-name>
+        <url-pattern>/admin/creat-phone</url-pattern>
+    </servlet-mapping>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>
