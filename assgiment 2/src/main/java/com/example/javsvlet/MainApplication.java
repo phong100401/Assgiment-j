@@ -123,15 +123,31 @@ public class MainApplication {
         stringBuilder.append(SQLConstant.SPACE);
         stringBuilder.append(tableName);
         stringBuilder.append(SQLConstant.SPACE);
-        stringBuilder.append(SQLConstant.ADD);
-        stringBuilder.append(SQLConstant.SPACE);
-        stringBuilder.append(SQLConstant.FOREIGN_KEY);
-        stringBuilder.append(SQLConstant.SPACE);
         // trả về danh sách các thuộc tính.
         Field[] fields = clazz.getDeclaredFields();
+
+        boolean isFirstForeinkey = true;
         for (int i = 0; i < fields.length; i++){
             String fieldName = fields[i].getName();
             if (fields[i].isAnnotationPresent(ForeignKey.class)){
+                if (!isFirstForeinkey) {
+                    stringBuilder.append(SQLConstant.COMMA);
+                    stringBuilder.append(SQLConstant.SPACE);
+                }
+
+                stringBuilder.append(SQLConstant.ADD);
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append(SQLConstant.CONSTRAINT);
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append("fk");
+                stringBuilder.append(SQLConstant.UNDER_SCORE);
+                stringBuilder.append(fieldName);
+                stringBuilder.append(SQLConstant.UNDER_SCORE);
+                stringBuilder.append(Math.round(Math.random()));
+                stringBuilder.append(SQLConstant.SPACE);
+                stringBuilder.append(SQLConstant.FOREIGN_KEY);
+                stringBuilder.append(SQLConstant.SPACE);
+
                 stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
                 stringBuilder.append(fieldName);
                 stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
@@ -143,6 +159,7 @@ public class MainApplication {
                 stringBuilder.append(SQLConstant.OPEN_PARENTHESES);
                 stringBuilder.append(foreignKey.referenceColumn());
                 stringBuilder.append(SQLConstant.CLOSE_PARENTHESES);
+                isFirstForeinkey = false;
             }
         }
         System.out.println(stringBuilder.toString());

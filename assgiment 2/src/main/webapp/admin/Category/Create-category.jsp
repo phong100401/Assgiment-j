@@ -49,7 +49,7 @@
                                      </div>--%>
                                     <div class="form-group">
                                         <label for="ProductName">Category Name</label>
-                                        <input type="text" name="name" class="form-control" <%= food.getName()%>  id="ProductName">
+                                        <input type="text" name="name" class="form-control" <%= food.getName()%>  id="ProductName" required>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
