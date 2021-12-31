@@ -23,6 +23,8 @@ public class SQLConstant {
     public static final String ADD= "ADD";
     public static final String ALTER_TABLE = "ALTER TABLE";
     public static final String AS = "AS";
+    public static final String UNDER_SCORE = "_";
+    public static final String CONSTRAINT = "CONSTRAINT";
     public static final String LIMIT = "LIMIT";
     public static final String OFFSET = "OFFSET";
     public static final String SELECT = "SELECT";
