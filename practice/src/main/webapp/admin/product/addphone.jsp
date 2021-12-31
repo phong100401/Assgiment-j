@@ -41,13 +41,13 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
             <div class="w3-rest">
-                <input class="w3-input w3-border" name="name" type="text" placeholder=" Name">
+                <input class="w3-input w3-border" name="name" type="text" placeholder=" Name" required>
             </div>
         </div>
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
             <div class="w3-rest">
-                <input class="w3-input w3-border" name="description" type="text" placeholder="Description">
+                <input class="w3-input w3-border" name="description" type="text" placeholder="Description" required>
             </div>
         </div>
         <div class="w3-row w3-section">
@@ -65,14 +65,14 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-money" aria-hidden="true"></i></div>
             <div class="w3-rest">
-                <input class="w3-input w3-border" name="price" type="text" placeholder="Price">
+                <input class="w3-input w3-border" name="price" type="text" placeholder="Price" required>
             </div>
         </div>
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-hand-o-right" aria-hidden="true"></i>
             </div>
             <div class="w3-rest">
-                <input class="w3-input w3-border" name="status" type="text" placeholder="Status">
+                <input class="w3-input w3-border" name="status" type="text" placeholder="Status" required>
             </div>
         </div>
 
